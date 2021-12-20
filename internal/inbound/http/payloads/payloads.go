@@ -1,4 +1,4 @@
-package http
+package payloads
 
 import "dcswitch/internal/domain"
 

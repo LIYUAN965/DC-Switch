@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"dcswitch/internal/inbound/http/payloads"
 	"dcswitch/internal/outbound/db"
 	"dcswitch/internal/service"
 	"dcswitch/pkg/mysql"
@@ -22,7 +23,7 @@ func GetAllSwitchVersions(w http.ResponseWriter, r *http.Request) {
 	//  500:
 	repo := db.SwitchVersionDBRepo{}
 	svs := service.SwitchVersionService{SwRepo: repo}
-	vResp := GetAllVersionsResp{}
+	vResp := payloads.GetAllVersionsResp{}
 	versions, err := svs.GetAll()
 	if err != nil {
 		setServerError(err, w)
@@ -61,7 +62,7 @@ func EditSwitchVersionName(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
-	sv := EditVersionName{}
+	sv := payloads.EditVersionName{}
 	err = json.Unmarshal(body, &sv.Body)
 	if err != nil {
 		setReqBodyError(err, string(body), w)
