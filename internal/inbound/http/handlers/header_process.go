@@ -38,6 +38,14 @@ func setParamsError(err error, vars interface{}, w http.ResponseWriter) {
 	}
 }
 
+func setQueriesError(key string, value string, w http.ResponseWriter) {
+	w.WriteHeader(http.StatusForbidden)
+	_, err := fmt.Fprintf(w, "QueriesError Unsupportted Queries: {key: %s, value: %s}\n", key, value)
+	if err != nil {
+		logrus.Error(err)
+	}
+}
+
 func setReqBodyError(err error, body string, w http.ResponseWriter) {
 	w.WriteHeader(http.StatusForbidden)
 	_, err = fmt.Fprintf(w, "Error: %v, Error Request Body: %v \n", err, body)

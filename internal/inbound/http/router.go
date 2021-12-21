@@ -6,6 +6,15 @@
 //      Host: 127.0.0.1
 //      Version: 0.0.1
 //
+//      Security:
+//      - api_key:
+//
+//      SecurityDefinitions:
+//      api_key:
+//           type: apiKey
+//           name: TOKEN
+//           in: header
+//
 // swagger:meta
 package http
 
@@ -21,7 +30,7 @@ import (
 func InitHandlers() *mux.Router {
 
 	r := mux.NewRouter()
-	r.Use(middlewares.SlowRequestMiddleware, middlewares.LoggingMiddleware, middlewares.CORSMiddleware)
+	r.Use(middlewares.RecoverWrap, middlewares.SlowRequestMiddleware, middlewares.LoggingMiddleware, middlewares.CORSMiddleware)
 
 	r.HandleFunc("/healthz", handlers.HealthCheck).Methods("GET")
 
@@ -31,6 +40,7 @@ func InitHandlers() *mux.Router {
 	// biz
 	r.HandleFunc("/switch/versions", handlers.GetAllSwitchVersions).Methods("GET")
 	r.HandleFunc("/switch/version/name/{id:[0-9]+}", handlers.EditSwitchVersionName).Methods("PATCH")
+	r.HandleFunc("/task/switch/module/detail", handlers.CreateModuleDetailTask).Methods("POST")
 
 	return r
 }
@@ -42,6 +52,6 @@ func InitDocHandler(r *mux.Router) {
 	r.HandleFunc("/redoc", swagger.DefaultReDoc).Methods("GET")
 }
 
-func HandleFuncWithAuth(path string, f func(http.ResponseWriter, *http.Request), auth func(http.ResponseWriter, *http.Request), methods ...string){
+func HandleFuncWithAuth(path string, f func(http.ResponseWriter, *http.Request), auth func(http.ResponseWriter, *http.Request), methods ...string) {
 
 }
