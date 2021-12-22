@@ -109,7 +109,7 @@
                 },
                 "type": {
                   "type": "string",
-                  "pattern": "/start|success|fail/",
+                  "pattern": "^(start|success|fail)$",
                   "x-go-name": "Type"
                 }
               }
