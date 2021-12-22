@@ -33,7 +33,7 @@ type ModuleDetailTask struct {
 	Body struct {
 		Name string `json:"name"`
 		// Required: true
-		// pattern: /start|success|fail/
+		// pattern: ^(start|success|fail)$
 		Type string `json:"type"` // start/success
 	}
 }
