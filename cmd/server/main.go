@@ -1,4 +1,4 @@
-//go:generate swagger generate spec -o ../../internal/config/swagger.json
+//go:generate swagger generate spec -o ../../internal/static/swagger.json
 //go install github.com/go-swagger/go-swagger/cmd/swagger@latest
 
 package main
