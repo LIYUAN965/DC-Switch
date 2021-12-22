@@ -87,6 +87,48 @@
         }
       }
     },
+    "/task/switch/module/detail": {
+      "post": {
+        "description": "模块明细 start/success/fail",
+        "operationId": "ModuleDetailTask",
+        "parameters": [
+          {
+            "example": "{\"type\": \"start\", \"name\": \"DBASwitch1\"}",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "x-go-name": "Name"
+                },
+                "type": {
+                  "type": "string",
+                  "pattern": "/start|success|fail/",
+                  "x-go-name": "Type"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/{id}": {
       "get": {
         "description": "慢查询模拟",
@@ -179,5 +221,17 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "TOKEN",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ]
 }

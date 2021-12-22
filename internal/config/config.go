@@ -1,6 +1,7 @@
 package config
 
 import (
+	"dcswitch/internal/static"
 	"dcswitch/pkg/encrypt"
 	"dcswitch/pkg/mysql"
 	"embed"
@@ -13,8 +14,7 @@ import (
 // GlobalConf 全局配置单例
 var GlobalConf Conf
 
-//go:embed swagger.json
-var SwaggerFile embed.FS
+var SwaggerFS = static.SwaggerFS
 
 //go:embed config.yaml
 var configFile embed.FS

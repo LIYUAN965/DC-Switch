@@ -5,8 +5,31 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"runtime/debug"
 	"time"
 )
+
+func RecoverWrap(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			r := recover()
+			if r != nil {
+				var err error
+				switch t := r.(type) {
+				case string:
+					err = fmt.Errorf(t)
+				case error:
+					err = t
+				default:
+					err = fmt.Errorf("Unknown error")
+				}
+				logrus.Errorf("stacktrace from panic: \n" + string(debug.Stack()))
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}()
+		next.ServeHTTP(w, r)
+	})
+}
 
 func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

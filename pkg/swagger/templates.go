@@ -1,15 +1,17 @@
 package swagger
 
 const (
-	redocLatest   = "https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"
+	redocJs       = "https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"
+	redocCss      = "https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700"
 	redocTemplate = `<!DOCTYPE html>
 <html>
   <head>
+	<link rel="shortcut icon" href="{{ .IconURL }}">
     <title>{{ .Title }}</title>
 		<!-- needed for adaptive design -->
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+		<link href="{{ .RedocCssURL }}" rel="stylesheet">
 
     <!--
     ReDoc doesn't change outer page styles
@@ -22,25 +24,25 @@ const (
     </style>
   </head>
   <body>
-    <redoc spec-url='{{ .SpecURL }}'></redoc>
-    <script src="{{ .RedocURL }}"> </script>
+    <redoc spec-url='{{ .SpecSwaggerJsonURL }}'></redoc>
+    <script src="{{ .RedocJsURL }}"> </script>
   </body>
 </html>
 `
 	docsTemplate = `<!DOCTYPE html>
 <html>
 <head>
-<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css">
-<link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+<link type="text/css" rel="stylesheet" href="{{ .DocsCssURL }}">
+<link rel="shortcut icon" href="{{ .IconURL }}">
 <title>{{ .Title }} - Swagger UI</title>
 </head>
 <body>
 <div id="swagger-ui">
 </div>
-<script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+<script src="{{ .DocsJsURL }}"></script>
 <script>
 const ui = SwaggerUIBundle({
-    url: '{{ .DocsURL }}',
+    url: '{{ .DocsSwaggerJsonURL }}',
 	oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
     dom_id: '#swagger-ui',
     presets: [

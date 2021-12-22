@@ -12,7 +12,7 @@ func BenchmarkGetSwaggerContent(b *testing.B) {
 }
 
 func getSwaggerContent() {
-	_, err := config.SwaggerFile.ReadFile("swagger.json")
+	_, err := config.SwaggerFS.ReadFile("swagger.json")
 	if err != nil {
 		panic(err)
 	}

@@ -6,10 +6,20 @@
 //      Host: 127.0.0.1
 //      Version: 0.0.1
 //
+//      Security:
+//      - api_key:
+//
+//      SecurityDefinitions:
+//      api_key:
+//           type: apiKey
+//           name: TOKEN
+//           in: header
+//
 // swagger:meta
 package http
 
 import (
+	"dcswitch/internal/config"
 	handlers "dcswitch/internal/inbound/http/handlers"
 	"dcswitch/internal/inbound/http/middlewares"
 	"dcswitch/pkg/swagger"
@@ -21,7 +31,7 @@ import (
 func InitHandlers() *mux.Router {
 
 	r := mux.NewRouter()
-	r.Use(middlewares.SlowRequestMiddleware, middlewares.LoggingMiddleware, middlewares.CORSMiddleware)
+	r.Use(middlewares.RecoverWrap, middlewares.SlowRequestMiddleware, middlewares.LoggingMiddleware, middlewares.CORSMiddleware)
 
 	r.HandleFunc("/healthz", handlers.HealthCheck).Methods("GET")
 
@@ -31,17 +41,29 @@ func InitHandlers() *mux.Router {
 	// biz
 	r.HandleFunc("/switch/versions", handlers.GetAllSwitchVersions).Methods("GET")
 	r.HandleFunc("/switch/version/name/{id:[0-9]+}", handlers.EditSwitchVersionName).Methods("PATCH")
+	r.HandleFunc("/task/switch/module/detail", handlers.CreateModuleDetailTask).Methods("POST")
 
 	return r
 }
 
 // InitDocHandler API文档Handler
 func InitDocHandler(r *mux.Router) {
-	r.HandleFunc("/static/swagger.json", handlers.SwaggerFile).Methods("GET")
-	r.HandleFunc("/docs", swagger.DefaultDocs).Methods("GET")
-	r.HandleFunc("/redoc", swagger.DefaultReDoc).Methods("GET")
+	fs := http.FileServer(http.FS(config.SwaggerFS))
+	r.PathPrefix("/static").Handler(http.StripPrefix("/static", fs))
+	r.HandleFunc("/docs", swagger.WrappedDocsHandler(swagger.DocsOpts{
+		DocsSwaggerJsonURL: "/static/swagger.json",
+		DocsJsURL:          "/static/swagger-ui-bundle.js",
+		DocsCssURL:         "/static/swagger-ui.css",
+		IconURL:            "/static/dcswitch.png",
+	})).Methods("GET")
+	r.HandleFunc("/redoc", swagger.WrappedReDocHandler(swagger.RedocOpts{
+		SpecSwaggerJsonURL: "/static/swagger.json",
+		RedocJsURL:         "/static/redoc.standalone.js",
+		RedocCssURL:        "/static/redoc.standalone.css",
+		IconURL:            "/static/dcswitch.png",
+	})).Methods("GET")
 }
 
-func HandleFuncWithAuth(path string, f func(http.ResponseWriter, *http.Request), auth func(http.ResponseWriter, *http.Request), methods ...string){
+func HandleFuncWithAuth(path string, f func(http.ResponseWriter, *http.Request), auth func(http.ResponseWriter, *http.Request), methods ...string) {
 
 }
