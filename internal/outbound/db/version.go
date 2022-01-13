@@ -8,9 +8,9 @@ import (
 
 type SwitchVersionDBRepo struct{}
 
-func (repo SwitchVersionDBRepo) Get(id int64) (domain.SwitchVersion, error) {
+func (repo SwitchVersionDBRepo) GetVersionById(id int64) (domain.SwitchVersion, error) {
 	var version domain.SwitchVersion
-	sql := "SELECT id, version_time, name FROM switch_version WHERE id = ?"
+	sql := "SELECT id, version_date, create_user, create_time FROM version WHERE id = ?"
 	exists, _ := repo.CheckExist(id)
 	if !exists {
 		return version, mysql.NotFoundError{}
@@ -27,7 +27,7 @@ func (repo SwitchVersionDBRepo) Get(id int64) (domain.SwitchVersion, error) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&version.Id, &version.Time, &version.Name)
+		err := rows.Scan(&version.Id, &version.VersionDate, &version.CreateUser, &version.CreateTime)
 		if err != nil {
 			log.Errorf("could not scan row: %v\n", err)
 			return version, err
@@ -42,7 +42,7 @@ func (repo SwitchVersionDBRepo) Get(id int64) (domain.SwitchVersion, error) {
 }
 
 func (repo SwitchVersionDBRepo) CheckExist(id int64) (bool, error) {
-	sql := "SELECT id, version_time, name FROM switch_version WHERE id = ?"
+	sql := "SELECT id, version_date, create_user, create_time FROM version WHERE id = ?"
 	exists, err := mysql.DB.RowExists(sql, id)
 	if !exists {
 		return false, mysql.NotFoundError{}
@@ -51,7 +51,7 @@ func (repo SwitchVersionDBRepo) CheckExist(id int64) (bool, error) {
 }
 
 func (repo SwitchVersionDBRepo) GetAll() ([]domain.SwitchVersion, error) {
-	sql := "SELECT id, version_time, name FROM switch_version"
+	sql := "SELECT id, version_date, create_user, create_time FROM version"
 	var versions []domain.SwitchVersion
 	db := mysql.DB.GetConn()
 
@@ -66,7 +66,7 @@ func (repo SwitchVersionDBRepo) GetAll() ([]domain.SwitchVersion, error) {
 	defer rows.Close()
 	for rows.Next() {
 		var v domain.SwitchVersion
-		err := rows.Scan(&v.Id, &v.Time, &v.Name)
+		err := rows.Scan(&v.Id, &v.VersionDate, &v.CreateUser, &v.CreateTime)
 		if err != nil {
 			log.Errorf("could not scan row: %v\n", err)
 			return versions, err
@@ -82,14 +82,14 @@ func (repo SwitchVersionDBRepo) GetAll() ([]domain.SwitchVersion, error) {
 }
 
 func (repo SwitchVersionDBRepo) Add(v domain.SwitchVersion) (int64, error) {
-	sql := "INSERT INTO switch_version (version_time, name) VALUES (?, ?)"
+	sql := "INSERT INTO version (version_date, create_user) VALUES (?, ?)"
 	db := mysql.DB.GetConn()
-	res, err := db.Exec(sql, v.Time.Format("2006-01-02 15:04:05"), v.Name)
+	res, err := db.Exec(sql, v.VersionDate, v.CreateUser)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"sql":          sql,
-			"version_time": v.Time,
-			"name":         v.Name,
+			"version_date": v.VersionDate,
+			"create_user": v.CreateUser,
 		}).Error(err.Error())
 		return -1, err
 	}
@@ -100,19 +100,19 @@ func (repo SwitchVersionDBRepo) Add(v domain.SwitchVersion) (int64, error) {
 	return id, nil
 }
 
-func (repo SwitchVersionDBRepo) EditName(id int64, name string) (int64, error) {
-	sql := "UPDATE switch_version SET name = ? WHERE ID = ?"
+func (repo SwitchVersionDBRepo) EditVersionDateById(id int64, versionDate string) (int64, error) {
+	sql := "UPDATE version SET version_date = ? WHERE id = ?"
 	db := mysql.DB.GetConn()
 	exists, err := repo.CheckExist(id)
 	if err != nil || !exists {
 		return -1, err
 	}
-	res, err := db.Exec(sql, name, id)
+	res, err := db.Exec(sql, versionDate, id)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"sql":  sql,
 			"id":   id,
-			"name": name,
+			"versionDate": versionDate,
 		}).Error(err.Error())
 		return -1, err
 	}

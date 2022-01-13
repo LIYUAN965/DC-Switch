@@ -1,0 +1,16 @@
+// 用于vscode @路径提示
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "CommonJS",
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "/",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "types": ["element-plus/global"]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

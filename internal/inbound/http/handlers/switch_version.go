@@ -44,8 +44,8 @@ func GetAllSwitchVersions(w http.ResponseWriter, r *http.Request) {
 	setGetSuccess(w)
 }
 
-func EditSwitchVersionName(w http.ResponseWriter, r *http.Request) {
-	// swagger:route PATCH /switch/version/name/{id} EditVersionName
+func EditSwitchVersionDate(w http.ResponseWriter, r *http.Request) {
+	// swagger:route PATCH /switch/version/date/{id} EditVersionDate
 	//
 	// 编辑切换版本名
 	//
@@ -62,7 +62,7 @@ func EditSwitchVersionName(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
-	sv := payloads.EditVersionName{}
+	sv := payloads.EditVersionDate{}
 	err = json.Unmarshal(body, &sv.Body)
 	if err != nil {
 		setReqBodyError(err, string(body), w)
@@ -70,7 +70,7 @@ func EditSwitchVersionName(w http.ResponseWriter, r *http.Request) {
 	}
 	repo := db.SwitchVersionDBRepo{}
 	svs := service.SwitchVersionService{SwRepo: repo}
-	_, err = svs.EditName(id, sv.Body.Name)
+	_, err = svs.EditVersionDateById(id, sv.Body.Date)
 	switch err.(type) {
 	case mysql.NotFoundError:
 		setNotFound(err, w)
@@ -81,4 +81,42 @@ func EditSwitchVersionName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	setPutSuccess(w)
+}
+
+func GetVersionById(w http.ResponseWriter, r *http.Request) {
+	// swagger:route GET /version/{id} GetVersionParam
+	//
+	// 根据id获取切换版本信息
+	//
+	// Responses:
+	//  200: GetVersionResp
+	//  500:
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
+	if err != nil {
+		setParamsError(err, vars, w)
+		return
+	}
+
+	repo := db.SwitchVersionDBRepo{}
+	svs := service.SwitchVersionService{SwRepo: repo}
+	vResp := payloads.GetVersionResp{}
+	version, err := svs.GetVersionById(id)
+	if err != nil {
+		setServerError(err, w)
+		return
+	}
+	vResp.Body.Version = version
+
+	resp, err := json.Marshal(vResp.Body)
+	if err != nil {
+		setServerError(err, w)
+		return
+	}
+	_, err = fmt.Fprintf(w, string(resp))
+	if err != nil {
+		setServerError(err, w)
+		return
+	}
+	setGetSuccess(w)
 }

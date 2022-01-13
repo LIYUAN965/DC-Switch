@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"runtime/debug"
 )
 
 func setGetSuccess(w http.ResponseWriter) {
@@ -27,6 +28,7 @@ func setServerError(err error, w http.ResponseWriter) {
 	_, err = fmt.Fprintf(w, "error: %v", err)
 	if err != nil {
 		logrus.Error(err)
+		logrus.Errorf("stacktrace from panic: \n" + string(debug.Stack()))
 	}
 }
 

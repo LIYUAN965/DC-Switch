@@ -32,10 +32,34 @@
         }
       }
     },
-    "/switch/version/name/{id}": {
+    "/switch/preparations/{versionId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetAllPreparesParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "VersionId",
+            "name": "versionId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetAllPreparesResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/version/date/{id}": {
       "patch": {
         "description": "编辑切换版本名",
-        "operationId": "EditVersionName",
+        "operationId": "EditVersionDate",
         "parameters": [
           {
             "type": "integer",
@@ -52,9 +76,9 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "date": {
                   "type": "string",
-                  "x-go-name": "Name"
+                  "x-go-name": "Date"
                 }
               }
             }
@@ -129,6 +153,30 @@
         }
       }
     },
+    "/version/{id}": {
+      "get": {
+        "description": "根据id获取切换版本信息",
+        "operationId": "GetVersionParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetVersionResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/{id}": {
       "get": {
         "description": "慢查询模拟",
@@ -153,26 +201,114 @@
     }
   },
   "definitions": {
-    "SwitchVersion": {
-      "description": "SwitchVersion 切换演练版本",
+    "Domain": {
+      "description": "version_domain 切换域",
       "type": "object",
       "properties": {
+        "AppDomain": {
+          "type": "string"
+        },
+        "DelFlag": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "DomainArchitect": {
+          "type": "string"
+        },
         "Id": {
           "type": "integer",
           "format": "int64"
         },
-        "Name": {
+        "Type": {
           "type": "string"
         },
-        "Time": {
-          "type": "string",
-          "format": "date-time"
+        "Version": {
+          "$ref": "#/definitions/SwitchVersion"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "Prepare": {
+      "description": "version_domain_prepare 切换准备项",
+      "type": "object",
+      "properties": {
+        "Content": {
+          "type": "string"
+        },
+        "CreateTime": {
+          "type": "string"
+        },
+        "CreateUser": {
+          "type": "string"
+        },
+        "DelFlag": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Domain": {
+          "$ref": "#/definitions/Domain"
+        },
+        "Id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Sequence": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "UpdateTime": {
+          "type": "string"
+        },
+        "UpdateUser": {
+          "type": "string"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "SwitchVersion": {
+      "description": "SwitchVersion 切换演练版本",
+      "type": "object",
+      "properties": {
+        "CreateTime": {
+          "type": "string"
+        },
+        "CreateUser": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "VersionDate": {
+          "type": "string"
         }
       },
       "x-go-package": "dcswitch/internal/domain"
     }
   },
   "responses": {
+    "GetAllPreparesResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "prepares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Prepare"
+            },
+            "x-go-name": "Prepares"
+          }
+        }
+      }
+    },
     "GetAllVersionsResp": {
       "description": "",
       "schema": {
@@ -203,6 +339,17 @@
             "type": "integer",
             "format": "int64",
             "x-go-name": "Id"
+          }
+        }
+      }
+    },
+    "GetVersionResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "$ref": "#/definitions/SwitchVersion"
           }
         }
       }

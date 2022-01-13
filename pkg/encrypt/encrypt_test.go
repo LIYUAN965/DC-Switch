@@ -1,6 +1,7 @@
 package encrypt
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -12,13 +13,17 @@ func TestGenSecKey(t *testing.T) {
 }
 
 func TestEncrypt(t *testing.T) {
-	password := "my-password"
+	password := ""
 	keyString, err := GenEncryptKey()
 	if err != nil {
 		t.Error(err)
 	}
+	fmt.Println(keyString)
+	fmt.Println(password)
 	secString := Encrypt(password, keyString)
+	fmt.Println(secString)
 	decryptStr := Decrypt(secString, keyString)
+	fmt.Println(decryptStr)
 	if decryptStr != password {
 		t.Errorf("%v != %v\n", password, decryptStr)
 	}

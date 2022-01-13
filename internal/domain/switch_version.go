@@ -1,23 +1,26 @@
 package domain
 
-import "time"
-
 // SwitchVersion 切换演练版本
 type SwitchVersion struct {
-	Id   int64
-	Name string
-	Time time.Time
+	Id           int64
+	VersionDate  string
+	CreateUser   string
+	CreateTime   string
 }
 
 type SwitchVersionRepo interface {
 	Add(version SwitchVersion) (int64, error)
-	Get(id int64) (SwitchVersion, error)
+	GetVersionById(id int64) (SwitchVersion, error)
 	GetAll() ([]SwitchVersion, error)
-	EditName(id int64, name string) (int64, error)
+	EditVersionDateById(id int64, versionDate string) (int64, error)
 }
 
 func (s SwitchVersion) GetAll(repo SwitchVersionRepo) ([]SwitchVersion, error) {
 	return repo.GetAll()
+}
+
+func (s SwitchVersion) GetVersionById(repo SwitchVersionRepo, id int64) (SwitchVersion, error) {
+	return repo.GetVersionById(id)
 }
 
 func (s SwitchVersion) Add(repo SwitchVersionRepo) error {
@@ -25,6 +28,6 @@ func (s SwitchVersion) Add(repo SwitchVersionRepo) error {
 	return err
 }
 
-func (s SwitchVersion) EditName(repo SwitchVersionRepo, id int64, name string) (int64, error) {
-	return repo.EditName(id, name)
+func (s SwitchVersion) EditVersionDateById(repo SwitchVersionRepo, id int64, versionDate string) (int64, error) {
+	return repo.EditVersionDateById(id, versionDate)
 }

@@ -13,15 +13,30 @@ type GetAllVersionsResp struct {
 	}
 }
 
-// swagger:parameters EditVersionName
-type EditVersionName struct {
+// swagger:response GetVersionResp
+type GetVersionResp struct {
+	// in: body
+	Body struct {
+		Version domain.SwitchVersion `json:"version"`
+	}
+}
+
+// swagger:parameters GetVersionParam
+type GetVersionParam struct {
+	// Required: true
+	// in: path
+	Id int64 `json:"id"`
+}
+
+// swagger:parameters EditVersionDate
+type EditVersionDate struct {
 	// Required: true
 	// in: path
 	Id int64 `json:"id"`
 	// Required: true
 	// in: body
 	Body struct {
-		Name string `json:"name"`
+		Date string `json:"date"`
 	}
 }
 

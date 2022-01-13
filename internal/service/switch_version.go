@@ -2,7 +2,6 @@ package service
 
 import (
 	"dcswitch/internal/domain"
-	"time"
 )
 
 type SwitchVersionService struct {
@@ -14,11 +13,15 @@ func (s SwitchVersionService) GetAll() ([]domain.SwitchVersion, error) {
 	return sw.GetAll(s.SwRepo)
 }
 
-func (s SwitchVersionService) Add(name string, time time.Time) error {
-	v := domain.SwitchVersion{Name: name, Time: time}
+func (s SwitchVersionService) Add(versionDate string) error {
+	v := domain.SwitchVersion{VersionDate: versionDate}
 	return v.Add(s.SwRepo)
 }
 
-func (s SwitchVersionService) EditName(id int64, name string) (int64, error) {
-	return s.SwRepo.EditName(id, name)
+func (s SwitchVersionService) EditVersionDateById(id int64, versionDate string) (int64, error) {
+	return s.SwRepo.EditVersionDateById(id, versionDate)
+}
+
+func (s SwitchVersionService) GetVersionById(id int64) (domain.SwitchVersion, error) {
+	return s.SwRepo.GetVersionById(id)
 }
