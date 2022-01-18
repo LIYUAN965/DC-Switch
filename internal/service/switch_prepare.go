@@ -12,6 +12,16 @@ func (s SwitchPrepareService) GetAllPreparesByVersionId(VersionId int64) ([]doma
 	return s.SwRepo.GetAllPreparesByVersionId(VersionId)
 }
 
+func (s SwitchPrepareService) GetPrepareById(Id int64) (domain.Prepare, error) {
+	return s.SwRepo.GetPrepareById(Id)
+}
+
+func (s SwitchPrepareService) EditPrepareById(Id int64, Title string, Content string) (int64, error) {
+	return s.SwRepo.EditPrepareById(Id, Title, Content)
+}
+
+
+
 //func (s SwitchPrepareService) Add(domainId int64, title string) error {
 //	v := domain.SwitchPrepare{VersionDate: versionDate}
 //	return v.Add(s.SwRepo)

@@ -45,6 +45,8 @@ func InitHandlers() *mux.Router {
 
 	r.HandleFunc("/version/{id:[0-9]+}", handlers.GetVersionById).Methods("GET")
 	r.HandleFunc("/switch/preparations/{versionId:[0-9]+}", handlers.GetAllSwitchPreparations).Methods("GET")
+	r.HandleFunc("/switch/preparation/{id:[0-9]+}", handlers.GetSwitchPreparationById).Methods("GET")
+	r.HandleFunc("/switch/preparation/edit/{id:[0-9]+}", handlers.EditSwitchPreparationById).Methods("Patch")
 	return r
 }
 

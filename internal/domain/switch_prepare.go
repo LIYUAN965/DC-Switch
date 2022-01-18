@@ -27,8 +27,18 @@ type Prepare struct {
 
 type PrepareRepo interface {
 	GetAllPreparesByVersionId(id int64) ([]Prepare, error)
+	GetPrepareById(id int64) (Prepare, error)
+	EditPrepareById(id int64, title string, content string) (int64, error)
 }
 
 func (s Prepare) GetAllPreparesByVersionId(repo PrepareRepo, versionId int64) ([]Prepare, error) {
 	return repo.GetAllPreparesByVersionId(versionId)
+}
+
+func (s Prepare) GetPrepareById(repo PrepareRepo, id int64) (Prepare, error) {
+	return repo.GetPrepareById(id)
+}
+
+func (s Prepare) EditPrepareById(repo PrepareRepo, id int64, title string, content string) (int64, error) {
+	return repo.EditPrepareById(id, title, content)
 }

@@ -6,7 +6,22 @@
     <el-button :type="prepare.status" :icon="prepare.icon" circle></el-button>
     {{prepare.title}}
   </div>
-
+  <div style="margin: 20px 30px 0 20px;">
+    <el-row :gutter="20" :model="form" >
+      <span class="ml-3 w-35 text-gray-600 inline-flex items-center"
+      >准备项</span>
+      <el-input v-model="form.title" readonly></el-input>
+    </el-row>
+    <el-row :gutter="20" :model="form" >
+      <span class="ml-3 w-35 text-gray-600 inline-flex items-center"
+      >详细描述</span>
+      <el-input v-model="form.content" type="textarea" :rows="15" placeholder="请输入相关准备信息"></el-input>
+    </el-row>
+    <el-row :gutter="20" justify="end">
+      <el-button type="success" @click="onSubmit">准备完成</el-button>
+      <el-button>取消</el-button>
+    </el-row>
+  </div>
 </template>
 
 <script setup>
@@ -14,6 +29,17 @@ import {
   Check,
   Close
 } from '@element-plus/icons-vue'
+import { reactive } from 'vue'
+
+// do not use same name with ref
+const form = reactive({
+  title: 'mq脚本',
+  content: ''
+})
+
+const onSubmit = () => {
+  console.log('submit!')
+}
 </script>
 
 <script>
@@ -62,5 +88,10 @@ export default {
   margin: 20px 0 0 20px;
   line-height: 100px;
   padding-left: 5%;
+}
+
+.el-form-item__label {
+  font-size: 20px!important;
+  font-weight: bold!important;
 }
 </style>

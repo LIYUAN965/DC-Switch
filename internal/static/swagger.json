@@ -32,6 +32,75 @@
         }
       }
     },
+    "/switch/preparation/edit/{id}": {
+      "patch": {
+        "description": "编辑准备项",
+        "operationId": "EditPrepareParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "x-go-name": "Content"
+                },
+                "title": {
+                  "type": "string",
+                  "x-go-name": "Title"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/preparation/{id}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetPrepareParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetPrepareResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/switch/preparations/{versionId}": {
       "get": {
         "description": "获取所有切换版本信息",
@@ -339,6 +408,17 @@
             "type": "integer",
             "format": "int64",
             "x-go-name": "Id"
+          }
+        }
+      }
+    },
+    "GetPrepareResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "prepare": {
+            "$ref": "#/definitions/Prepare"
           }
         }
       }
