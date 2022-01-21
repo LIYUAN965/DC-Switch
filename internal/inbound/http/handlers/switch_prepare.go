@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 )
@@ -104,18 +103,21 @@ func EditSwitchPreparationById(w http.ResponseWriter, r *http.Request) {
 		setParamsError(err, vars, w)
 		return
 	}
-
+	aaa := r.URL.Query()
 	defer r.Body.Close()
-	body, _ := ioutil.ReadAll(r.Body)
+	//body, _ := ioutil.ReadAll(r.Body)
 	sv := payloads.EditPrepareParam{}
-	err = json.Unmarshal(body, &sv.Body)
-	if err != nil {
-		setReqBodyError(err, string(body), w)
-		return
-	}
+	//err = json.Unmarshal(body, &sv.Body)
+	//if err != nil {
+	//	setReqBodyError(err, string(body), w)
+	//	return
+	//}
+	sv.Body.Title = aaa.Get("title")
+	sv.Body.Content = aaa.Get("content")
 
 	repo := db.PrepareDBRepo{}
 	svs := service.SwitchPrepareService{SwRepo: repo}
+	//_, err = svs.EditPrepareById(id, aaa.Get("title"), aaa.Get("content"))
 	_, err = svs.EditPrepareById(id, sv.Body.Title, sv.Body.Content)
 	switch err.(type) {
 	case mysql.NotFoundError:

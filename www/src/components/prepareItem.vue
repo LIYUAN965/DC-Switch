@@ -7,19 +7,20 @@
     {{prepare.title}}
   </div>
   <div style="margin: 20px 30px 0 20px;">
-    <el-row :gutter="20" :model="form" >
+    <el-row :gutter="20" :model="prepare" >
       <span class="ml-3 w-35 text-gray-600 inline-flex items-center"
       >准备项</span>
-      <el-input v-model="form.title" readonly></el-input>
+      <el-input v-model="prepare.title" readonly></el-input>
     </el-row>
-    <el-row :gutter="20" :model="form" >
+    <el-row :gutter="20" :model="prepare" >
       <span class="ml-3 w-35 text-gray-600 inline-flex items-center"
       >详细描述</span>
-      <el-input v-model="form.content" type="textarea" :rows="15" placeholder="请输入相关准备信息"></el-input>
+      <el-input v-model="prepare.content" type="textarea" :rows="15" placeholder="请输入相关准备信息"></el-input>
+      <el-alert title="详细描述不得为空！" type="error" show-icon v-show="isShow"/>
     </el-row>
     <el-row :gutter="20" justify="end">
-      <el-button type="success" @click="onSubmit">准备完成</el-button>
-      <el-button>取消</el-button>
+      <el-button type="primary" @click="editPrepareById(prepare.id)">准备完成</el-button>
+      <el-button @click="$router.go(-1);">返回</el-button>
     </el-row>
   </div>
 </template>
@@ -27,32 +28,24 @@
 <script setup>
 import {
   Check,
-  Close
+  Clock
 } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
-
-// do not use same name with ref
-const form = reactive({
-  title: 'mq脚本',
-  content: ''
-})
-
-const onSubmit = () => {
-  console.log('submit!')
-}
 </script>
 
 <script>
 import axios from "axios";
+import {ElMessageBox} from "element-plus";
 
 export default {
   data() {
     return {
       prepare: {
-          title: 'MQ设置',
+          title: '',
           icon: 'Check',
-          status: 'success'
-      }
+          status: 'success',
+          content: ''
+      },
+      isShow: false
     }
   },
   mounted() {
@@ -60,21 +53,55 @@ export default {
   },
   methods: {
     init() {
+      this.getPrepareById(this.$route.params.id)
     },
-    getAllPreparesByVersionId(versionId) {
-      const url = 'http://127.0.0.1:80/switch/preparations/' + versionId
+    getPrepareById(id) {
+      const url = 'http://127.0.0.1:80/switch/preparation/' + id
       axios.get(url).then(
           res => {
-            this.prepareGroup = []
-            res.data['prepares'].forEach((item) => {
-                let prepare = {}
-                this.prepareGroup.push(prepare)
-            })
+            this.prepare['id'] = res.data['prepare']['Id']
+            this.prepare['title'] = res.data['prepare']['Title']
+            this.prepare['content'] = res.data['prepare']['Content']
+            if (res.data['prepare']['Status'] == 0) {
+              this.prepare['status'] = 'warning'
+              this.prepare['icon'] = 'Clock'
+            } else {
+              this.prepare['status'] = 'success'
+              this.prepare['icon'] = 'Check'
+            }
           },
           error => {
             console.log(error)
           }
       )
+    },
+    editPrepareById(id) {
+      console.log(id)
+      if (!this.prepare.content) {
+        this.isShow = true
+        return
+      }
+      this.isShow = false
+      const url = 'http://127.0.0.1:80/switch/preparation/edit/'+id
+      let data = {
+        "title": this.prepare.title,
+        "content": this.prepare.content
+      }
+
+      ElMessageBox.confirm('确认准备信息填写完成?')
+        .then(() => {
+          axios.get(url, {params:data}).then(
+              res => {
+                this.$router.go(-1);
+              },
+              error => {
+                console.log(error)
+              }
+          )
+        })
+        .catch(() => {
+          // catch error
+        })
     }
   },
 }
@@ -90,8 +117,4 @@ export default {
   padding-left: 5%;
 }
 
-.el-form-item__label {
-  font-size: 20px!important;
-  font-weight: bold!important;
-}
 </style>

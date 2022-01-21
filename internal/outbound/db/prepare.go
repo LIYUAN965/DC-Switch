@@ -55,7 +55,7 @@ func (repo PrepareDBRepo) CheckExist(id int64) (bool, error) {
 
 func (repo PrepareDBRepo) GetPrepareById(id int64) (domain.Prepare, error) {
 	var prepare domain.Prepare
-	sql := "SELECT p.id, p.title, p.content FROM version_domain_prepare AS p WHERE p.id = ?"
+	sql := "SELECT p.id, p.title, p.content, p.status FROM version_domain_prepare AS p WHERE p.id = ?"
 	prepareRepo := PrepareDBRepo{}
 	prepare_exists, _ := prepareRepo.CheckExist(id)
 	if !prepare_exists {
@@ -73,7 +73,7 @@ func (repo PrepareDBRepo) GetPrepareById(id int64) (domain.Prepare, error) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&prepare.Id, &prepare.Title, &prepare.Content)
+		err := rows.Scan(&prepare.Id, &prepare.Title, &prepare.Content, &prepare.Status)
 		if err != nil {
 			log.Errorf("could not scan row: %v\n", err)
 			return prepare, err
@@ -88,7 +88,7 @@ func (repo PrepareDBRepo) GetPrepareById(id int64) (domain.Prepare, error) {
 }
 
 func (repo PrepareDBRepo) EditPrepareById(id int64, title string, content string) (int64, error) {
-	sql := "UPDATE version_domain_prepare SET title = ?, content = ? WHERE id = ?"
+	sql := "UPDATE version_domain_prepare SET title = ?, content = ?, status = 1 WHERE id = ?"
 	prepareRepo := PrepareDBRepo{}
 	prepare_exists, _ := prepareRepo.CheckExist(id)
 	if !prepare_exists {

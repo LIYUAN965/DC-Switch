@@ -45,6 +45,12 @@ func CORSMiddleware(next http.Handler) http.Handler {
 		// Do stuff here
 		// Call the next handlers, which can be another middleware in the chain, or the final handlers.
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		r.Header.Set("Access-Control-Allow-Origin", "*")
+		r.Header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		r.Header.Set("Access-Control-Allow-Headers", "X-Requested-With, Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
 		next.ServeHTTP(w, r)
 	})
 }
