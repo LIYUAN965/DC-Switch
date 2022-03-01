@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-steps :active="1" finish-status="success" simple style="margin: 0 20px 0 20px;">
-      <el-step title="事件升级与预判"></el-step>
-      <el-step title="切换准备"></el-step>
-      <el-step title="切换演练"></el-step>
+      <el-step @click="goTo(1)" title="事件升级与预判" style="cursor: pointer;"></el-step>
+      <el-step @click="goTo(2)" title="切换准备" style="cursor: pointer;"></el-step>
+      <el-step @click="goTo(3)" title="切换演练" style="cursor: pointer;"></el-step>
     </el-steps>
   </div>
 
@@ -14,14 +14,12 @@
 
   <div>
     <template v-for="(prepare, i) in prepareGroup" :key="i">
-      <div
-          class="demo-shadow"
-          :style="{ boxShadow: `var(--el-box-shadow-base)` }"
-      ><router-link :to="'/switch/preparation/detail/'+prepare.id" style="font-size: 20px; text-decoration: none;">
-        <el-button :type="prepare.status" :icon="prepare.icon" circle></el-button>
-        {{prepare.title}}
+      <router-link :to="'/switch/preparation/detail/'+prepare.id" style="font-size: 20px; text-decoration: none;">
+        <div class="demo-shadow" :style="{ boxShadow: `var(--el-box-shadow-base)` }">
+          <el-button :type="prepare.status" :icon="prepare.icon" circle></el-button>
+          {{prepare.title}}
+        </div>
       </router-link>
-      </div>
     </template>
   </div>
 
@@ -113,6 +111,13 @@ export default {
         return
       }
       const url = '/#/switch/preparation/detail/'+this.fuwutaiConfirm.id
+      window.open(url, '_self')
+    },
+    goTo(index) {
+      let url = '/#/switch/preparation'
+      if (index===3) {
+        url = '/#/switch/drill'
+      }
       window.open(url, '_self')
     }
   },

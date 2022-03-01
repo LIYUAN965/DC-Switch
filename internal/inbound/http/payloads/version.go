@@ -40,20 +40,28 @@ type EditVersionDate struct {
 	}
 }
 
-// swagger:parameters ModuleDetailTask
-type ModuleDetailTask struct {
+// swagger:parameters ModuleDetailTaskParam
+type ModuleDetailTaskParam struct {
 	// Required: true
 	// in: body
 	// example: {"type": "start", "name": "DBASwitch1"}
 	Body struct {
 		Name string `json:"name"`
-		// Required: true
-		// pattern: /start|success|fail/
+		// Required: trues
+		// pattern: start|success|fail
 		Type string `json:"type"` // start/success
 	}
 }
 
-func (p ModuleDetailTask) CheckParam() bool {
+// swagger:response ModuleDetailTaskResp
+type ModuleDetailTaskResp struct {
+	// in: body
+	Body struct {
+		Result string `json:"result"`
+	}
+}
+
+func (p ModuleDetailTaskParam) CheckParam() bool {
 	checkPass := false
 	typeOptions := []string{"start", "success", "fail"}
 	for _, v := range typeOptions {

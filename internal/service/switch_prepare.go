@@ -8,16 +8,16 @@ type SwitchPrepareService struct {
 	SwRepo domain.PrepareRepo
 }
 
-func (s SwitchPrepareService) GetAllPreparesByVersionId(VersionId int64) ([]domain.Prepare, error) {
-	return s.SwRepo.GetAllPreparesByVersionId(VersionId)
+func (s SwitchPrepareService) GetAllPreparesByVersionId(versionId int64) ([]domain.Prepare, error) {
+	return s.SwRepo.GetAllPreparesByVersionId(versionId)
 }
 
-func (s SwitchPrepareService) GetPrepareById(Id int64) (domain.Prepare, error) {
-	return s.SwRepo.GetPrepareById(Id)
+func (s SwitchPrepareService) GetPrepareById(id int64) (domain.Prepare, error) {
+	return s.SwRepo.GetPrepareById(id)
 }
 
-func (s SwitchPrepareService) EditPrepareById(Id int64, Title string, Content string) (int64, error) {
-	return s.SwRepo.EditPrepareById(Id, Title, Content)
+func (s SwitchPrepareService) EditPrepareById(id int64, title string, content string) (int64, error) {
+	return s.SwRepo.EditPrepareById(id, title, content)
 }
 
 

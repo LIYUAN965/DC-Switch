@@ -42,7 +42,7 @@ func (repo SwitchVersionDBRepo) GetVersionById(id int64) (domain.SwitchVersion, 
 }
 
 func (repo SwitchVersionDBRepo) CheckExist(id int64) (bool, error) {
-	sql := "SELECT id, version_date, create_user, create_time FROM version WHERE id = ?"
+	sql := "SELECT id FROM version WHERE id = ?"
 	exists, err := mysql.DB.RowExists(sql, id)
 	if !exists {
 		return false, mysql.NotFoundError{}

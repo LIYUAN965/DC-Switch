@@ -32,8 +32,290 @@
         }
       }
     },
+    "/switch/detail/editComment/{id}": {
+      "get": {
+        "description": "编辑准备项",
+        "operationId": "EditSwitchDetailParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "x-go-name": "Comment"
+                },
+                "endTime": {
+                  "type": "string",
+                  "x-go-name": "EndTime"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/detail/editEndTIme/{id}": {
+      "get": {
+        "description": "编辑准备项",
+        "operationId": "EditSwitchDetailParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "x-go-name": "Comment"
+                },
+                "endTime": {
+                  "type": "string",
+                  "x-go-name": "EndTime"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/details/{versionId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetAllDetailsParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "VersionId",
+            "name": "versionId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetAllDetailsResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/domain/{id}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetSwitchDomainParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetSwitchDomainResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/failed/details/{moduleId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetModuleDetailsParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ModuleId",
+            "name": "moduleId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetModuleDetailsResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/failed/details/{versionId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetModuleDetailsParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ModuleId",
+            "name": "moduleId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetModuleDetailsResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/module/domain/{moduleId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetModuleParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ModuleId",
+            "name": "moduleId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetModuleResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/module/progress/{moduleId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetModuleProgressParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ModuleId",
+            "name": "moduleId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetModuleProgressResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/modules/domain/{domainId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetModulesParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "DomainId",
+            "name": "domainId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetModulesResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/switch/modules/{versionId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetAllModulesParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "VersionId",
+            "name": "versionId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetAllModulesResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/switch/preparation/edit/{id}": {
-      "patch": {
+      "get": {
         "description": "编辑准备项",
         "operationId": "EditPrepareParam",
         "parameters": [
@@ -166,6 +448,30 @@
         }
       }
     },
+    "/switch/version/progress/{versionId}": {
+      "get": {
+        "description": "获取所有切换版本信息",
+        "operationId": "GetVersionProgressParam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "VersionId",
+            "name": "versionId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GetVersionProgressResp"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/switch/versions": {
       "get": {
         "description": "获取所有切换版本信息",
@@ -183,7 +489,7 @@
     "/task/switch/module/detail": {
       "post": {
         "description": "模块明细 start/success/fail",
-        "operationId": "ModuleDetailTask",
+        "operationId": "ModuleDetailTaskParam",
         "parameters": [
           {
             "example": "{\"type\": \"start\", \"name\": \"DBASwitch1\"}",
@@ -192,17 +498,15 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [
-                "type"
-              ],
               "properties": {
                 "name": {
                   "type": "string",
                   "x-go-name": "Name"
                 },
                 "type": {
+                  "description": "Required: trues",
                   "type": "string",
-                  "pattern": "/start|success|fail/",
+                  "pattern": "start|success|fail",
                   "x-go-name": "Type"
                 }
               }
@@ -210,8 +514,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "$ref": "#/responses/ModuleDetailTaskResp"
           },
           "403": {
             "description": ""
@@ -270,6 +574,50 @@
     }
   },
   "definitions": {
+    "Detail": {
+      "type": "object",
+      "properties": {
+        "BeginTime": {
+          "type": "string"
+        },
+        "Comment": {
+          "type": "string"
+        },
+        "Detail": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "string"
+        },
+        "EndTime": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Module": {
+          "$ref": "#/definitions/Module"
+        },
+        "Status": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "DetailExcel": {
+      "type": "object",
+      "properties": {
+        "Detail": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
     "Domain": {
       "description": "version_domain 切换域",
       "type": "object",
@@ -293,6 +641,66 @@
         },
         "Version": {
           "$ref": "#/definitions/SwitchVersion"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "Module": {
+      "type": "object",
+      "properties": {
+        "Details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DetailExcel"
+          }
+        },
+        "File": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Module": {
+          "type": "string"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "ModuleProgress": {
+      "type": "object",
+      "properties": {
+        "BeginTime": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "string"
+        },
+        "EndTime": {
+          "type": "string"
+        },
+        "Module": {
+          "type": "string"
+        },
+        "ModuleStatus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ModuleStatus"
+          }
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
+    "ModuleStatus": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Status": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "x-go-package": "dcswitch/internal/domain"
@@ -341,6 +749,20 @@
       },
       "x-go-package": "dcswitch/internal/domain"
     },
+    "SwitchDomain": {
+      "description": "SwitchDomain 切换域",
+      "type": "object",
+      "properties": {
+        "AppDomain": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "dcswitch/internal/domain"
+    },
     "SwitchVersion": {
       "description": "SwitchVersion 切换演练版本",
       "type": "object",
@@ -363,6 +785,36 @@
     }
   },
   "responses": {
+    "GetAllDetailsResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Detail"
+            },
+            "x-go-name": "Details"
+          }
+        }
+      }
+    },
+    "GetAllModulesResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Module"
+            },
+            "x-go-name": "Modules"
+          }
+        }
+      }
+    },
     "GetAllPreparesResp": {
       "description": "",
       "schema": {
@@ -412,6 +864,69 @@
         }
       }
     },
+    "GetModuleDetailsResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Detail"
+            },
+            "x-go-name": "Details"
+          }
+        }
+      }
+    },
+    "GetModuleProgressResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "progress": {
+            "$ref": "#/definitions/ModuleProgress"
+          }
+        }
+      }
+    },
+    "GetModuleResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "module": {
+            "$ref": "#/definitions/Module"
+          }
+        }
+      }
+    },
+    "GetModulesProgressResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "progress": {
+            "$ref": "#/definitions/ModuleProgress"
+          }
+        }
+      }
+    },
+    "GetModulesResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Module"
+            },
+            "x-go-name": "Modules"
+          }
+        }
+      }
+    },
     "GetPrepareResp": {
       "description": "",
       "schema": {
@@ -419,6 +934,28 @@
         "properties": {
           "prepare": {
             "$ref": "#/definitions/Prepare"
+          }
+        }
+      }
+    },
+    "GetSwitchDomainResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "switchDomain": {
+            "$ref": "#/definitions/SwitchDomain"
+          }
+        }
+      }
+    },
+    "GetVersionProgressResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "progress": {
+            "$ref": "#/definitions/ModuleProgress"
           }
         }
       }
@@ -444,6 +981,18 @@
             "format": "int64",
             "x-go-name": "Status",
             "example": 200
+          }
+        }
+      }
+    },
+    "ModuleDetailTaskResp": {
+      "description": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "x-go-name": "Result"
           }
         }
       }

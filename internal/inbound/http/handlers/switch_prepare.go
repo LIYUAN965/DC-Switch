@@ -89,7 +89,7 @@ func GetSwitchPreparationById(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditSwitchPreparationById(w http.ResponseWriter, r *http.Request) {
-	// swagger:route PATCH /switch/preparation/edit/{id} EditPrepareParam
+	// swagger:route GET /switch/preparation/edit/{id} EditPrepareParam
 	//
 	// 编辑准备项
 	//

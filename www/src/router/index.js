@@ -22,6 +22,21 @@ const routes = [{
             path: '/switch/preparation/detail/:id',
             component: () =>
                 import ("@/components/prepareItem.vue")
+        }, {
+            name: 'drillList',
+            path: '/switch/drill',
+            component: () =>
+                import ("@/components/drillList.vue")
+        }, {
+            name: 'drillItem',
+            path: '/switch/drill/detail/:id',
+            component: () =>
+                import ("@/components/drillItem.vue")
+        }, {
+            name: 'rangeItem',
+            path: '/switch/range/:id',
+            component: () =>
+                import ("@/components/rangeItem.vue")
         }]
     },
     , {

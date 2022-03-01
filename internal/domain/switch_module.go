@@ -32,19 +32,20 @@ type Progress struct {
 
 type ModuleRepo interface {
 	GetModuleDetail(name string) (ModuleDetail, error)
-	ModuleDetailStart(detailID int64, detail ModuleDetail) (int64, error)
-	ModuleDetailSuccess(detailID int64, detail ModuleDetail) (int64, error)
-	ModuleDetailFail(detailID int64, detail ModuleDetail) (int64, error)
+	//ModuleDetailStart(detailID int64, detail ModuleDetail) (int64, error)
+	//ModuleDetailSuccess(detailID int64, detail ModuleDetail) (int64, error)
+	//ModuleDetailFail(detailID int64, detail ModuleDetail) (int64, error)
+	ModifyModuleDetailStatus(detailID int64, status int64) (int64, error)
 }
 
 func (m *ModuleDetail) Get(repo ModuleRepo, name string) (ModuleDetail, error) {
 	return repo.GetModuleDetail(name)
 }
 
-func (m *ModuleDetail) Start(repo ModuleRepo, id int64) (int64, error) {
+func (m *ModuleDetail) Start(repo ModuleRepo, id int64, status int64) (int64, error) {
 	m.StartTime = time.Now()
 	logrus.Infof("%v start time: %v\n", m.Name, m.StartTime)
-	return repo.ModuleDetailStart(id, *m)
+	return repo.ModifyModuleDetailStatus(id, status)
 }
 
 func (m *ModuleDetail) end() {
@@ -52,16 +53,24 @@ func (m *ModuleDetail) end() {
 	logrus.Infof("%v end time: %v\n", m.Name, m.StartTime)
 }
 
-func (m *ModuleDetail) Success(repo ModuleRepo, id int64) (int64, error) {
+func (m *ModuleDetail) Success(repo ModuleRepo, id int64, status int64) (int64, error) {
 	m.end()
 	m.Status = "success"
-	return repo.ModuleDetailSuccess(id, *m)
+	return repo.ModifyModuleDetailStatus(id, status)
 }
 
-func (m *ModuleDetail) Fail(repo ModuleRepo, id int64, user User, comment string) (int64, error) {
-	m.end()
-	m.User = user
-	m.Comment = comment
-	m.Status = "fail"
-	return repo.ModuleDetailFail(id, *m)
+//func (m *ModuleDetail) Fail(repo ModuleRepo, id int64, user User, comment string) (int64, error) {
+//	m.end()
+//	m.User = user
+//	m.Comment = comment
+//	m.Status = "fail"
+//	return repo.ModifyModuleDetailStatus(id, *m)
+//}
+
+func (m *ModuleDetail) Fail(repo ModuleRepo, id int64, status int64) (int64, error) {
+	//m.end()
+	//m.User = user
+	//m.Comment = comment
+	//m.Status = "fail"
+	return repo.ModifyModuleDetailStatus(id, status)
 }

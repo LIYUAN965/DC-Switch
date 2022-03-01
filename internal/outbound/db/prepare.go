@@ -45,7 +45,7 @@ func (repo PrepareDBRepo) GetAllPreparesByVersionId(versionId int64) ([]domain.P
 }
 
 func (repo PrepareDBRepo) CheckExist(id int64) (bool, error) {
-	sql := "SELECT id FROM version_domain_prepare WHERE id = ?"
+	sql := "SELECT id FROM version_domain_prepare WHERE id = ? AND del_flag = 0"
 	exists, err := mysql.DB.RowExists(sql, id)
 	if !exists {
 		return false, mysql.NotFoundError{}

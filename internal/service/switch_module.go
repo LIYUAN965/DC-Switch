@@ -12,7 +12,7 @@ func (s SwitchModuleSvc) Start(name string) error {
 	if err != nil {
 		return err
 	}
-	_, err = md.Start(s.SmRepo, md.Id)
+	_, err = md.Start(s.SmRepo, md.Id, 1)
 	return err
 }
 
@@ -22,12 +22,18 @@ func (s SwitchModuleSvc) Success(name string) error {
 	if err != nil {
 		return err
 	}
-	_, err = md.Success(s.SmRepo, md.Id)
+	_, err = md.Success(s.SmRepo, md.Id, 2)
 	return err
 }
 
-func (s SwitchModuleSvc) Fail(id int64, user domain.User, comment string) error {
+//func (s SwitchModuleSvc) Fail(id int64, user domain.User, comment string) error {
+//	md := domain.ModuleDetail{}
+//	_, err := md.Fail(s.SmRepo, id, user, comment)
+//	return err
+//}
+
+func (s SwitchModuleSvc) Fail(name string) error {
 	md := domain.ModuleDetail{}
-	_, err := md.Fail(s.SmRepo, id, user, comment)
+	_, err := md.Fail(s.SmRepo, md.Id, 3)
 	return err
 }

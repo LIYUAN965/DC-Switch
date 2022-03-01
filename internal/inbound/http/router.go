@@ -47,6 +47,18 @@ func InitHandlers() *mux.Router {
 	r.HandleFunc("/switch/preparations/{versionId:[0-9]+}", handlers.GetAllSwitchPreparations).Methods("GET")
 	r.HandleFunc("/switch/preparation/{id:[0-9]+}", handlers.GetSwitchPreparationById).Methods("GET")
 	r.HandleFunc("/switch/preparation/edit/{id:[0-9]+}", handlers.EditSwitchPreparationById).Methods("GET")
+	r.HandleFunc("/switch/modules/{versionId:[0-9]+}", handlers.GetAllSwitchModules).Methods("GET")
+	r.HandleFunc("/switch/details/{versionId:[0-9]+}", handlers.GetAllSwitchDetails).Methods("GET")
+	r.HandleFunc("/switch/module/progress/{moduleId:[0-9]+}", handlers.GetProgressByModuleId).Methods("GET")
+	r.HandleFunc("/switch/version/progress/{versionId:[0-9]+}", handlers.GetProgressByVersionId).Methods("GET")
+	r.HandleFunc("/switch/version/failed/details/{versionId:[0-9]+}", handlers.GetFailedDetailsByVersionId).Methods("GET")
+	r.HandleFunc("/switch/module/details/{moduleId:[0-9]+}", handlers.GetDetailsByModuleId).Methods("GET")
+	r.HandleFunc("/switch/detail/editComment/{id:[0-9]+}", handlers.EditDetailCommentById).Methods("GET")
+	r.HandleFunc("/switch/detail/editEndTime/{id:[0-9]+}", handlers.EditDetailEndTimeById).Methods("GET")
+	r.HandleFunc("/switch/range/upload/{moduleId:[0-9]+}", handlers.SwitchRangeUpload).Methods("POST")
+	r.HandleFunc("/switch/modules/domain/{domainId:[0-9]+}", handlers.GetModulesByDomainId).Methods("GET")
+	r.HandleFunc("/switch/module/domain/{moduleId:[0-9]+}", handlers.GetModuleByModuleId).Methods("GET")
+	r.HandleFunc("/switch/domain/{id:[0-9]+}", handlers.GetSwitchDomainById).Methods("GET")
 	return r
 }
 

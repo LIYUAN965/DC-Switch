@@ -10,6 +10,9 @@
             <ToggleSidebar />
             <Breadcrumb />
           </div>
+          <div>
+            <span style="font-size: 28px;font-weight: bold;">壹钱包双活演练平台</span>
+          </div>
           <div class="right">
             <SearchInput />
             <FullScreen />
@@ -46,7 +49,7 @@ import ToggleSidebar from './AppHeader/ToggleSidebar.vue'
 .left, .right{
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 30%;
 }
 .right{
   justify-content: flex-end;

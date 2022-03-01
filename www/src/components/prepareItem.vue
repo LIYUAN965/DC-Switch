@@ -87,7 +87,6 @@ export default {
         "title": this.prepare.title,
         "content": this.prepare.content
       }
-
       ElMessageBox.confirm('确认准备信息填写完成?')
         .then(() => {
           axios.get(url, {params:data}).then(

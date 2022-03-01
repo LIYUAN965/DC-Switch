@@ -32,6 +32,19 @@ type GetPrepareResp struct {
 	}
 }
 
+// swagger:parameters EditSwitchDetailParam
+type EditSwitchDetailParam struct {
+	// Required: true
+	// in: path
+	Id int64 `json:"id"`
+	// Required: true
+	// in: body
+	Body struct {
+		Comment   string `json:"comment"`
+		EndTime   string `json:"endTime"`
+	}
+}
+
 // swagger:parameters EditPrepareParam
 type EditPrepareParam struct {
 	// Required: true

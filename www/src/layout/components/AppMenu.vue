@@ -12,9 +12,31 @@
       <el-icon><IconMenu /></el-icon>
       <span>主页</span>
     </el-menu-item>
+    <el-sub-menu index="/switch/range">
+      <template #title>
+        <el-icon><Setting /></el-icon>
+        <span>切换范围</span>
+      </template>
+      <el-menu-item index="/switch/range/1">
+        DBA
+      </el-menu-item>
+      <el-menu-item index="/switch/range/2">
+        PE
+      </el-menu-item>
+<!--      <el-menu-item index="/switch/range/3">-->
+<!--        SA-->
+<!--      </el-menu-item>-->
+<!--      <el-menu-item index="/switch/range/4">-->
+<!--        NE-->
+<!--      </el-menu-item>-->
+    </el-sub-menu>
     <el-menu-item index="/switch/preparation">
       <el-icon><Document /></el-icon>
       <span>切换准备</span>
+    </el-menu-item>
+    <el-menu-item index="/switch/drill">
+      <el-icon><Document /></el-icon>
+      <span>切换演练</span>
     </el-menu-item>
     <el-sub-menu index="/permission">
       <template #title>
