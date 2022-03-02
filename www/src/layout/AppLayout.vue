@@ -17,7 +17,7 @@
             <SearchInput />
             <FullScreen />
             <!-- <NotifyInfo /> -->
-            <!-- <UserInfo /> -->
+             <UserInfo />{{$store.state.currentUser}}
           </div>
         </el-header>
         <el-main>
@@ -34,6 +34,7 @@ import AppMenu from './components/AppMenu.vue'
 import Breadcrumb from './AppHeader/BreadCrumb.vue'
 import SearchInput from './AppHeader/SearchInput.vue'
 import FullScreen from './AppHeader/FullScreen.vue'
+import UserInfo from './AppHeader/UserInfo.vue'
 import NotifyInfo from './AppHeader/NotifyInfo.vue'
 import ToggleSidebar from './AppHeader/ToggleSidebar.vue'
 
